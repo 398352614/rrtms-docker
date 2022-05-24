@@ -46,19 +46,6 @@ services:
     tty: true
     restart: always
 
-### WORKER Container #######################################
-
-  worker:
-    build:
-      context: ./worker
-    volumes:
-      - ${WEB_ROOT}:/var/www/html
-    depends_on:
-      - mysql
-      - redis
-    tty: true
-    restart: always
-
 ### Nginx Server Container ##################################
 
   nginx:
@@ -76,7 +63,7 @@ services:
 ### MySQL Container #########################################
 
   mysql:
-    image: mysql:5.7
+    image: mysql/mysql-server
     volumes:
         - ../data/mysql:/var/lib/mysql
         #- mysql_data:/var/lib/mysql
@@ -89,17 +76,7 @@ services:
       - MYSQL_DATABASE=jiyun2_test
     restart: always
 
-### PHPMyAdmin Container #########################################
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "${PHPMYADMIN_PORT}:80"
-    links:
-        - mysql:db
-    depends_on:
-      - mysql
-    restart: always
 
 ### Redis Container #########################################
 
@@ -113,6 +90,18 @@ services:
       - ../data/redis:/data
     restart: always
 
+  ### PHPMyAdmin Container #########################################
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "${PHPMYADMIN_PORT}:80"
+    links:
+      - mysql:db
+    depends_on:
+      - mysql
+    restart: always
+
 ### Volumes Setup ###########################################
 
 
@@ -122,3 +111,5 @@ networks:
   default:
     external:
       name: ${USER_NETWORK}
+
+

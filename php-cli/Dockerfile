@@ -35,7 +35,7 @@ COPY ./supervisor /etc/supervisor/conf.d
 RUN mkdir /etc/supervisor/logs
 # RUN mkdir -p /usr/share/fonts/chinese/TrueType/simsun.ttc
 #COPY ./simsun.ttc /usr/share/fonts/chinese/TrueType/simsun.ttc
-RUN apt install wget -y 
+RUN apt install wget -y
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/bin/composer
 #COPY ./composer /usr/bin/composer
 RUN chmod +x /usr/bin/composer
